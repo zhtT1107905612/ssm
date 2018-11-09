@@ -182,6 +182,10 @@
 
     </dependencies>
 
+
+
+
+
 	<build>
 		<finalName>maven02</finalName>
 		<plugins>
