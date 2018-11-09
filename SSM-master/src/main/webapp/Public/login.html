@@ -55,14 +55,13 @@
 </div>
 <div class="container">
 
-    <form class="form-signin" method="post" action="" id="loginForm" >
+    <form class="form-signin" method="post" action="" id="loginForm" onsubmit="return fromsubmit()" >
         <h2 class="form-signin-heading">登录系统</h2>
         <input type="text" name="userName" id="userName" class="input-block-level" placeholder="账号">
         <input type="password" name="passWord" id="passWord" class="input-block-level" placeholder="密码">
        
-        <p><button class="btn btn-large btn-primary" type="submit">登录</button>
+        <p><button class="btn btn-large btn-primary" type="submit" id="">登录</button>
 
-        <a style="float:right;margin-top:9px;margin-right: 45px">忘记密码</a></p>
 
 
     </form>

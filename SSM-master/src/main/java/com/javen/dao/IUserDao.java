@@ -12,6 +12,8 @@ public interface IUserDao {
 
     User selectByPrimaryKey(Integer id);
 
+    User selectUser(User record);
+
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
