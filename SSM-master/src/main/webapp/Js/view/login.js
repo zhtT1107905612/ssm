@@ -13,6 +13,8 @@ function fromsubmit() {
             if ( code ==  0){
                 $.cookie('user', 0);
                 $("#loginForm").attr("action","../index.html");
+            }else{
+                alert(data.remake);
             }
         },
         error:function(err){

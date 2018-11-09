@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,14 +40,23 @@ public class UserCommonInterceptor extends HandlerInterceptorAdapter {
         log.info("contextPath:"+contextPath);
         log.info("url:"+url);
 
-        User user =  (User) request.getSession().getAttribute("userbean");
-        if(user == null){
-            response.setCharacterEncoding("UTF-8");
-            log.info("Interceptor：跳转到login页面！");
-            request.getRequestDispatcher("login.do").include(request, response);
+
+        Cookie[] Cookies = request.getCookies();
+        for(int i =0;i<Cookies.length;i++){
+            Cookie c = Cookies[i];
+
+            if (Integer.valueOf(c.getValue()) == 0){
+                System.out.println(c.getName() + "," + c.getValue());
+                return  true;
+            }else{
+                response.setCharacterEncoding("UTF-8");
+                log.info("Interceptor：跳转到login页面！");
+                request.getRequestDispatcher("/").include(request, response);
+                return  false;
+            }
+             // response.getWriter().println(c.getName() + "," + c.getValue());
+        }
             return false;
-        }else
-            return true;
     }
 
     /**
