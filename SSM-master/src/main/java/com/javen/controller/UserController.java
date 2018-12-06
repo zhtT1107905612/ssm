@@ -33,7 +33,7 @@ import com.javen.service.UserService;
 @RequestMapping("/user")  
 // /user/**
 public class UserController {  
-	private static Logger log=LoggerFactory.getLogger(UserController.class);
+	private static Logger log =LoggerFactory.getLogger(UserController.class);
 	 @Resource  
 	 private UserService userService;
 

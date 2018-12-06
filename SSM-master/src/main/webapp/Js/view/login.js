@@ -1,6 +1,6 @@
 function fromsubmit() {
     var user = {};
-    user["userName"] = $("#userName").val()
+    user["userName"] = $("#userName").val();
     user["passWord"] = $("#passWord").val();
     $.ajax({
         type: "POST",

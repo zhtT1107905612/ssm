@@ -34,99 +34,94 @@
 </head>
 <body>
 <form class="form-inline definewidth m20" action="index.html" method="get">
-    菜单名称：
+    员工名称：
     <input type="text" name="menuname" id="menuname"class="abc input-default" placeholder="" value="">&nbsp;&nbsp; 
-    <button type="submit" class="btn btn-primary">查询</button>&nbsp;&nbsp; <button type="button" class="btn btn-success" id="addnew">新增菜单</button>
+    <button type="button" class="btn btn-primary" onclick="queryStaff()">查询</button>&nbsp;&nbsp; <button type="button" class="btn btn-success" id="addnew">添加员工</button>
 </form>
-<table class="table table-bordered table-hover definewidth m10">
+<table class="table table-bordered table-hover definewidth m10" id="tab">
     <thead>
     <tr>
-        <th>菜单标题</th>
-        <th>GROUP</th>
-        <th>MODEL</th>
-        <th>ACTION</th>
+        <th>员工名称</th>
+        <th>薪资</th>
         <th>状态</th>
+        <th>入职时间</th>
+        <th>离职时间</th>
         <th>管理操作</th>
     </tr>
     </thead>
-	     <tr>
-            <td colspan="5">系统管理</td>
-            <td><a href="edit.html">编辑</a></td>
-        </tr>
-        <tr>
-                <td>机构管理</td>
-                <td>Admin</td>
-                <td>Merchant</td>
-                <td>index</td>
-                <td>0</td>
-                <td><a href="edit.html">编辑</a></td>
-            </tr><tr>
-                <td>权限管理</td>
-                <td>Admin</td>
-                <td>Node</td>
-                <td>index</td>
-                <td>0</td>
-                <td><a href="edit.html">编辑</a></td>
-            </tr><tr>
-                <td>角色管理</td>
-                <td>Admin</td>
-                <td>Role</td>
-                <td>index</td>
-                <td>0</td>
-                <td><a href="edit.html">编辑</a></td>
-            </tr><tr>
-                <td>用户管理</td>
-                <td>Admin</td>
-                <td>User</td>
-                <td>index</td>
-                <td>0</td>
-                <td><a href="edit.html">编辑</a></td>
-            </tr><tr>
-                <td>菜单管理</td>
-                <td>Admin</td>
-                <td>Menu</td>
-                <td>index</td>
-                <td>0</td>
-                <td><a href="edit.html">编辑</a></td>
-            </tr><tr>
-            <td colspan="5">明信片管理</td>
-            <td><a href="edit.html">编辑</a></td>
-        </tr>
-        <tr>
-                <td>批次管理</td>
-                <td>Admin</td>
-                <td>LabelSet</td>
-                <td>index</td>
-                <td>0</td>
-                <td><a href="edit.html">编辑</a></td>
-            </tr><tr>
-                <td>明信片查询</td>
-                <td>Admin</td>
-                <td>Label</td>
-                <td>index</td>
-                <td>0</td>
-                <td><a href="edit.html">编辑</a></td>
-            </tr><tr>
-                <td>明信片生成</td>
-                <td>Admin</td>
-                <td>Label</td>
-                <td>apply</td>
-                <td>1</td>
-                <td><a href="edit.html">编辑</a></td>
-            </tr></table>
+
+         </table>
 
 </body>
 </html>
 <script>
     $(function () {
-        
-
 		$('#addnew').click(function(){
-
 				window.location.href="add.html";
 		 });
-
-
     });
-	
+    $(document).ready(function () {
+        queryStaff();
+    });
+
+    function queryStaff() {
+        var staff = {};
+
+        $.ajax({
+            type: "POST",
+            url: "/main/queryStaff",
+            async:true,
+            dataType: "json",
+            data: staff,
+            success: function(data){
+                var code = data.code;
+                if ( code ==  0){
+                    var rsp = data.rsp;
+                    var str ="<thead><tr><th>员工名称</th><th>薪资</th><th>状态</th><th>入职时间</th><th>离职时间</th><th>管理操作</th</tr></thead>";
+                    $("#tab").html("");
+                    for(var i in rsp){
+                        var stat = rsp[i].state;
+                        if (stat == 0){
+                            stat = "正常工作"
+                        }else if(stat == 1){
+                            stat = "停止工作"
+                        }
+                        str +=    "<tr><td>";
+                        str +=    rsp[i].userName  + "</td><td>";
+                        str += rsp[i].salary + "</td><td>";
+                        str +=  stat + "</td><td>";
+                        str +=  new Date(rsp[i].entryDate).Format("yyyy年MM月dd日") + "</td><td>";
+                        str += new Date(rsp[i].departureDate).Format("yyyy年MM月dd日") + "</td><td>";
+                        str += "<a href='edit.html'>编辑</a></td></tr>";
+                    }
+                    $("#tab").html(str);
+
+                }else{
+                    alert(data.remake);
+                }
+            },
+            error:function(err){
+                alert("系统异常!")
+            }
+        });
+    }
+
+
+
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
 </script>

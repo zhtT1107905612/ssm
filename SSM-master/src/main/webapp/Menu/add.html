@@ -36,43 +36,30 @@
 <form action="index.html" method="post" class="definewidth m20">
 <table class="table table-bordered table-hover m10">
     <tr>
-        <td width="10%" class="tableleft">上级</td>
+        <td width="10%" class="tableleft">员工名称</td>
         <td>
-            <select name="parentid">
-            <option value="0">一级菜单</option><option value='1'   />&nbsp;系统管理</option><option value='7'   />&nbsp;明信片管理</option>            </select>
+            <input type="text" name="userName" id="userName"/>
         </td>
     </tr>
     <tr>
-        <td class="tableleft">名称</td>
-        <td><input type="text" name="name"/></td>
-    </tr>
-    <tr>
-        <td class="tableleft">Group</td>
-        <td><input type="text" name="group"/></td>
-    </tr>
-    <tr>
-        <td class="tableleft">Model</td>
-        <td><input type="text" name="module"/></td>
-    </tr>
-    <tr>
-        <td class="tableleft">Action</td>
-        <td><input type="text" name="action"/></td>
-    </tr>
-    <tr>
-        <td class="tableleft">备注</td>
-        <td><input type="text" name="remark"/></td>
+        <td class="tableleft">薪资</td>
+        <td><input type="text" name="salary" id="salary"/></td>
     </tr>
     <tr>
         <td class="tableleft">状态</td>
         <td>
-            <input type="radio" name="status" value="0" checked/> 启用
-            <input type="radio" name="status" value="1"/> 禁用
+            <input type="radio" name="state" value="0" checked/> 正常
+            <input type="radio" name="state" value="1"/> 停止
         </td>
+    </tr>
+    <tr>
+        <td class="tableleft">入职时间</td>
+        <td><input type="date" name="entryDate" id="entryDate"/></td>
     </tr>
     <tr>
         <td class="tableleft"></td>
         <td>
-            <button type="submit" class="btn btn-primary" type="button">保存</button> &nbsp;&nbsp;<button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
+            <button type="button" class="btn btn-primary" type="button" onclick="addStaff()">保存</button> &nbsp;&nbsp;<button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
         </td>
     </tr>
 </table>
@@ -86,4 +73,32 @@
 		 });
 
     });
+    function addStaff(){
+        var staff = {};
+        staff["userName"] = $("#userName").val();
+        staff["salary"] = $("#salary").val();
+        staff["state"] =  $('input:radio:checked').val();
+        staff["entryDate"] = $("#entryDate").val();
+                $.ajax({
+            type: "POST",
+            url: "/main/addStaff",
+            async:true,
+            dataType: "json",
+            data: staff,
+                    success: function(data){
+                var code = data.code;
+                if ( code ==  0){
+                    alert(data.remake);
+                    // window.location.href="index.html";
+                }else{
+                    alert(data.remake);
+                }
+            },
+            error:function(err){
+                alert("系统异常!")
+            }
+        });
+    }
+
+
 </script>
