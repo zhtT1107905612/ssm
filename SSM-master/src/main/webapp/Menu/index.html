@@ -12,6 +12,11 @@
     <script type="text/javascript" src="../Js/ckform.js"></script>
     <script type="text/javascript" src="../Js/common.js"></script>
 
+    <script src="../Js/bootstrap-table.js"></script>
+    <link href="../Css/bootstrap-table.css" rel="stylesheet" />
+    <script src="../Js/locale/bootstrap-table-zh-CN.js"></script>
+
+
     <style type="text/css">
         body {
             padding-bottom: 40px;
@@ -38,30 +43,70 @@
     <input type="text" name="menuname" id="userName" class="abc input-default" placeholder="">&nbsp;&nbsp;
     <button type="button" class="btn btn-primary" onclick="queryStaff()">查询</button>&nbsp;&nbsp; <button type="button" class="btn btn-success" id="addnew">添加员工</button>
 </form>
-<table class="table table-bordered table-hover definewidth m10" id="tab">
-    <thead>
-    <tr>
-        <th>员工名称</th>
-        <th>薪资</th>
-        <th>状态</th>
-        <th>入职时间</th>
-        <th>离职时间</th>
-        <th>管理操作</th>
-    </tr>
-    </thead>
-
-         </table>
+<table class="table table-bordered table-hover definewidth m10" id="tab"></table>
 
 </body>
 </html>
 <script>
+
+    /* $(function () {
+
+       $('#tab').bootstrapTable({
+            url: '/main/queryStaff',
+            method: 'post',                      //请求方式（*）
+         //   sortable: false,                     //是否启用排序
+            columns: [{
+                checkbox: true
+            }, {
+                field: 'userName',
+                title: '员工名称'
+            }, {
+                field: 'salary',
+                title: '薪资'
+            }, {
+                field: 'state',
+                title: '状态'
+            }, {
+                field: 'entryDate',
+                title: '入职时间'
+            }, {
+                field: 'departureDate',
+                title: '离职时间'
+            }, {
+                field: '',
+                title: '管理操作',
+                function(row, index) {
+                    console,info(row)
+                }
+            },]
+        });
+    });*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     $(function () {
 		$('#addnew').click(function(){
 				window.location.href="add.html";
 		 });
     });
-    $(document).ready(function () {
-        queryStaff();
+     $(document).ready(function () {
+         queryStaff();
     });
 
     function queryStaff() {
@@ -78,7 +123,7 @@
                 var code = data.code;
                 if ( code ==  0){
                     var rsp = data.rsp;
-                    var str ="<thead><tr><th>员工名称</th><th>薪资</th><th>状态</th><th>入职时间</th><th>离职时间</th><th>管理操作</th</tr></thead>";
+                    var str ="<thead><tr><th>员工名称</th><th>薪资</th><th>状态</th><th>入职时间</th><th>离职时间</th><th>管理操作</th></tr></thead>";
                     $("#tab").html("");
                     for(var i in rsp){
                         var stat = rsp[i].state;
