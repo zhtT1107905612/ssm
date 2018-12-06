@@ -41,7 +41,6 @@ public class MainController {
             map.put("code", 8);
             map.put("remake", "查询失败");
         }
-        logger.info("查询员工列表{}",map);
         return map;
     }
 
@@ -52,13 +51,12 @@ public class MainController {
         try {
             mainService.addStaff(bo);
             map.put("code", 0);
-            map.put("remake", "成功添加员工");
+            map.put("remake", "添加员工成功");
         }catch (Exception e){
             e.printStackTrace();
             map.put("code", 8);
-            map.put("remake", "查询失败");
+            map.put("remake", "添加添加失败");
         }
-        logger.info("新增员工{}",map);
         return map;
     }
 

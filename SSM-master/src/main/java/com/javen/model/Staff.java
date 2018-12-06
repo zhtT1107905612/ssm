@@ -1,5 +1,7 @@
 package com.javen.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Staff {
@@ -8,9 +10,9 @@ public class Staff {
     private String userName;
 
     private Integer salary;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date entryDate;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date departureDate;
 
     private Integer state;
@@ -61,5 +63,17 @@ public class Staff {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return "Staff{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", salary=" + salary +
+                ", entryDate=" + entryDate +
+                ", departureDate=" + departureDate +
+                ", state=" + state +
+                '}';
     }
 }

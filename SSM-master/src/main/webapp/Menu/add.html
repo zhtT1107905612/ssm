@@ -79,23 +79,23 @@
         staff["salary"] = $("#salary").val();
         staff["state"] =  $('input:radio:checked').val();
         staff["entryDate"] = $("#entryDate").val();
-                $.ajax({
+        $.ajax({
             type: "POST",
             url: "/main/addStaff",
-            async:true,
+            async:false,
             dataType: "json",
             data: staff,
-                    success: function(data){
+            success: function(data){
                 var code = data.code;
                 if ( code ==  0){
                     alert(data.remake);
-                    // window.location.href="index.html";
+                    window.location.href="index.html";
                 }else{
                     alert(data.remake);
                 }
             },
             error:function(err){
-                alert("系统异常!")
+                alert("系统异常!");
             }
         });
     }
