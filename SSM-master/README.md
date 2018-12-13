@@ -1,3 +1,2 @@
-# SSM
- SSM框架——详细整合教程（Spring+SpringMVC+MyBatis）
- 博客地址http://www.cnblogs.com/zyw-205520/p/4771253.html
+# 后台系统
+ 独自开发的SSM系统,欢迎指点.
