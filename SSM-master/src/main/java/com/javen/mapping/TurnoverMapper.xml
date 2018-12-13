@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.javen.dao.TurnoverMapper" >
+  <resultMap id="BaseResultMap" type="com.javen.model.Turnover" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="cash" property="cash" jdbcType="DECIMAL" />
+    <result column="network_cash" property="networkCash" jdbcType="DECIMAL" />
+    <result column="total_sum" property="totalSum" jdbcType="DECIMAL" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cash, network_cash, total_sum, date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_turnover
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectTurnover" resultMap="BaseResultMap" parameterType="com.javen.model.Turnover" >
+    select
+    <include refid="Base_Column_List" />
+    from t_turnover
+    where 1=1
+    <if test="id !=null and id !=''">
+      AND id = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="cash != null and cash != ''" >
+      AND cash = #{cash,jdbcType=DECIMAL}
+    </if>
+    <if test="networkCash != null and networkCash != ''" >
+      AND network_cash = #{networkCash,jdbcType=DECIMAL}
+    </if>
+    <if test="totalSum != null and totalSum != '' " >
+      AND total_sum = #{totalSum,jdbcType=DECIMAL}
+    </if>
+    <if test="date != null and date != ''" >
+      AND date = #{date,jdbcType=TIMESTAMP}
+    </if>
+
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_turnover
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.javen.model.Turnover" >
+    insert into t_turnover (id, cash, network_cash, total_sum, date)
+    values (#{id,jdbcType=BIGINT}, #{cash,jdbcType=DECIMAL}, #{networkCash,jdbcType=DECIMAL},
+      #{totalSum,jdbcType=DECIMAL}, #{date,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.javen.model.Turnover" >
+    insert into t_turnover
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cash != null" >
+        cash,
+      </if>
+      <if test="networkCash != null" >
+        network_cash,
+      </if>
+      <if test="totalSum != null" >
+        total_sum,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cash != null" >
+        #{cash,jdbcType=DECIMAL},
+      </if>
+      <if test="networkCash != null" >
+        #{networkCash,jdbcType=DECIMAL},
+      </if>
+      <if test="totalSum != null" >
+        #{totalSum,jdbcType=DECIMAL},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.javen.model.Turnover" >
+    update t_turnover
+    <set >
+      <if test="cash != null" >
+        cash = #{cash,jdbcType=DECIMAL},
+      </if>
+      <if test="networkCash != null" >
+        network_cash = #{networkCash,jdbcType=DECIMAL},
+      </if>
+      <if test="totalSum != null" >
+        total_sum = #{totalSum,jdbcType=DECIMAL},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.javen.model.Turnover" >
+    update t_turnover
+    set cash = #{cash,jdbcType=DECIMAL},
+    network_cash = #{networkCash,jdbcType=DECIMAL},
+      total_sum = #{totalSum,jdbcType=DECIMAL},
+      date = #{date,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

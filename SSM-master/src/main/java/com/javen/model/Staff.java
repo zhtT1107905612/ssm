@@ -65,15 +65,4 @@ public class Staff {
         this.state = state;
     }
 
-    @Override
-    public String toString() {
-        return "Staff{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", salary=" + salary +
-                ", entryDate=" + entryDate +
-                ", departureDate=" + departureDate +
-                ", state=" + state +
-                '}';
-    }
 }
